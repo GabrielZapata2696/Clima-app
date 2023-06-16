@@ -1,13 +1,16 @@
+import fs from 'fs';
 import axios from 'axios';
-
 
 class Busquedas {
 
-    historial = [ 'San pelayo', 'Medellin', 'Bogotá' ];
+    historial = [];
+    dBPath = './db/database.json';
 
     constructor() {
 
         //todo: leer db si existe
+        this.leerDB();
+
     }
 
 
@@ -27,6 +30,20 @@ class Busquedas {
         };
     }
 
+    get historialCapitalizado() {
+        // let capitalizado = '';
+        // this.historial.forEach((lugar, i) => {
+        //     capitalizado = lugar[ 0 ].toUpperCase() + lugar.substring(1);
+        //     this.historial[ i ] = capitalizado;
+        //     capitalizado = '';
+        // });
+
+        return this.historial.map(lugar => {
+            let palabras = lugar.split(' ');
+            palabras = palabras.map(p => p[ 0 ].toUpperCase() + p.substring(1));
+            return palabras.join(' ');
+        });
+    }
 
     async ciudad(lugar = '') {
 
@@ -84,6 +101,35 @@ class Busquedas {
         }
     }
 
+
+    agregarHistorial(lugar = '') {
+
+        //prevernir duplicados
+        if (!this.historial.includes(lugar.toLowerCase())) {
+            this.historial = this.historial.splice(0, 5);
+            this.historial.unshift(lugar.toLowerCase());
+            //Grabar en db/archivo de texto
+            this.guardarDB();
+        }
+    }
+
+    guardarDB() {
+        const payload = {
+            historial: this.historial
+        };
+        fs.writeFileSync(this.dBPath, JSON.stringify(payload));
+    }
+
+    leerDB() {
+
+        if (fs.existsSync(this.dBPath)) {
+            const info = fs.readFileSync(this.dBPath, { encoding: 'utf-8' });
+            const data = JSON.parse(info);
+            this.historial = data.historial;
+
+        }
+
+    }
 
 }
 

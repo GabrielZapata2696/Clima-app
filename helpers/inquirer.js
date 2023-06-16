@@ -119,37 +119,5 @@ const confirmar = async (message) => {
     return ok;
 };
 
+export { inquirerMenu, pausa, leerInput, listarLugares, confirmar };
 
-const mostrarListadoChecklist = async (tareas = []) => {
-    const choices = tareas.map((tarea, i) => {
-
-        const index = `${i + 1}.`.green;
-
-        return {
-            value: tarea.id,
-            name: `${index} ${tarea.desc}`,
-            checked: (tarea.completadoEn) ? true : false
-        };
-    });
-
-
-    const pregunta = [
-        {
-            type: 'checkbox',
-            name: 'ids',
-            message: 'seleccione',
-            choices
-        }
-    ];
-    const { ids } = await inquirer.prompt(pregunta);
-    return ids;
-
-};
-
-
-
-export { inquirerMenu, pausa, leerInput, listarLugares, confirmar, mostrarListadoChecklist };
-
-// module.exports = {
-//     inquirerMenu
-// };
