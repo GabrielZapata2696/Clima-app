@@ -1,10 +1,11 @@
 # Notas:
 
-Este es un aplicativo informativo del clima basado en una ciudad a consultar, utilizando el CLI:
+Este es un aplicativo informativo del clima utilizando el CLI.
 
 ## Funcionalidades:
 
-Por definir
+- Consulta varios datos climaticos, en vivo, de lugares geograficos, ciudades, paises (entre otros).
+- Historial de las ultimas 6 consultas.
 
 ## Dependencias:
 
